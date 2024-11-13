@@ -21,28 +21,48 @@
 
 /* PDF Viewer Container */
 .pdf-viewer-container {
-  width: 90%;
-  max-width: 1000px;
-  background: #1f1f1f;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1rem;
+  padding: 2rem;
+  background: #1f1f1f;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* Navigation Buttons */
-.navigation-buttons {
+.pdf-viewer {
+  width: 100%;
+  height: 70vh;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin: 2rem 0;
+  align-items: center;
 }
 
-.navigation-buttons button {
+.navigation-controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.nav-button {
   padding: 0.75rem 2rem;
   font-size: 1rem;
   background: #2196F3;
@@ -56,15 +76,50 @@
   font-weight: 500;
 }
 
-.navigation-buttons button:hover {
+.nav-button:hover:not(:disabled) {
   background: #1976D2;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
 }
 
-.navigation-buttons button:disabled {
+.nav-button:disabled {
   background: #2a2a2a;
   cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.page-indicator {
+  background: rgba(33, 150, 243, 0.1);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Prevent viewer interaction for viewers */
+.viewer-mode .rpv-core__viewer {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Hide scrollbars */
+.rpv-core__viewer {
+  overflow: hidden !important;
+}
+
+/* Center the page content */
+.rpv-core__inner-page {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* Ensure the page fits the container */
+.rpv-core__canvas-layer {
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 /* Upload Container */
@@ -112,12 +167,10 @@
 
 /* Session Link */
 .session-link {
-  background: #1f1f1f;
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin-top: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
   text-align: center;
   width: 100%;
   max-width: 600px;
@@ -125,19 +178,25 @@
 
 .session-link p {
   color: #ffffff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   font-size: 1.1rem;
 }
 
-.session-link a {
+.session-link-input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
   color: #2196F3;
-  text-decoration: none;
-  word-break: break-all;
-  transition: color 0.3s ease;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
 }
 
-.session-link a:hover {
-  color: #1976D2;
+.session-link-input:focus {
+  outline: none;
+  border-color: #2196F3;
 }
 
 /* Upload Section */
@@ -161,14 +220,149 @@
 
 /* PDF viewer specific styles */
 .rpv-core__viewer {
-  width: 100% !important;
-  height: 70vh !important;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .rpv-core__inner-page {
   display: flex;
   justify-content: center;
-} 
+}
+
+.rpv-core__page-layer {
+  background: white;
+}
+
+.rpv-core__spinner {
+  color: #2196F3;
+}
+
+.page-indicator {
+  color: #ffffff;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Add these styles to prevent viewer interaction */
+.viewer-mode .rpv-core__viewer {
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+.viewer-mode .rpv-core__scroll-container {
+    overflow: hidden !important;
+}
+
+/* Style for the page indicator */
+.page-indicator {
+    background: rgba(33, 150, 243, 0.1);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+    border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.navigation-buttons button {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.viewer-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.viewing-status {
+    font-size: 0.8rem;
+    color: #64B5F6;
+    opacity: 0.8;
+}
+
+/* Disable viewer interactions for viewers */
+.viewer-mode .rpv-core__viewer {
+    pointer-events: none;
+    user-select: none;
+}
+
+.link-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.session-link-input {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #2196F3;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.session-link-input:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+.copy-button {
+    padding: 0.75rem 1.5rem;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+}
+
+.copy-button:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.copy-button:active {
+    transform: translateY(0);
+}
+
+/* Animation for the copy status */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.copy-button.copied {
+    background: #4CAF50;
+    animation: fadeOut 2s ease-out;
+}
