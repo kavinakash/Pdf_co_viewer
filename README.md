@@ -1,4 +1,6 @@
-Demo link: https://pdf-coviewer.netlify.app/
+Demo link: https://pdf-coviewer.netlify.app/   (wait for 10 to 15 sec to render pdf)
+Frontend hosted in netlify
+Server hosted in render.com
 
 ![image](https://github.com/user-attachments/assets/59746a4e-ad3f-45b2-bf0f-9066e65e5bf7)
 ----------------------------------------------------------------------------------------
